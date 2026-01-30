@@ -12,15 +12,12 @@ from llama_index.readers.pdf_table import PDFTableReader
 from llama_index.readers.file import PyMuPDFReader
 
 
-# 1. SETUP: High-Reasoning Local LLM
-# DeepSeek-R1-8B fits comfortably in 16GB RAM and is excellent at math/logic.
 llm = Ollama(
     model="deepseek-r1:8b", 
     request_timeout=600.0,
     additional_kwargs={"num_ctx": 16384, "temperature": 0} 
 )
 
-# Local Embedding
 embed_model = HuggingFaceEmbedding(model_name="BAAI/bge-small-en-v1.5")
 
 Settings.llm = llm
@@ -50,7 +47,6 @@ index = VectorStoreIndex.from_documents(documents)
 
 
 # 4. RECONCILIATION AGENT
-# Force the model to "think" before answering to improve math accuracy
 query_engine = index.as_query_engine(
     similarity_top_k=11,
     streaming=False
