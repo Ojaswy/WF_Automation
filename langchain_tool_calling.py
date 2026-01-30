@@ -10,9 +10,7 @@ from langchain_core.messages import SystemMessage, HumanMessage
 from langchain_core.output_parsers import StrOutputParser
 
 
-# ============================================================
 # MODEL SETUP
-# ============================================================
 
 llm = ChatOllama(
     model="deepseek-r1:8b",
@@ -22,9 +20,7 @@ llm = ChatOllama(
 )
 
 
-# ============================================================
-# PROMPTS (UNCHANGED SEMANTICS)
-# ============================================================
+# PROMPTS
 
 EXTRACTION_AGENT_PROMPT = """
 You are an expert financial document extraction agent.
@@ -93,9 +89,7 @@ Do NOT hallucinate. Use only provided reconciliation results.
 """
 
 
-# ============================================================
 # DETERMINISTIC RECONCILIATION TOOL
-# ============================================================
 
 def reconciliation_tool_fn(extracted_data: Dict) -> Dict:
     invoices = extracted_data.get("invoices", [])
@@ -183,9 +177,7 @@ ReconciliationTool = StructuredTool.from_function(
 )
 
 
-# ============================================================
 # AGENT EXECUTION FUNCTIONS
-# ============================================================
 
 def run_extraction_agent(context_text: str) -> Dict:
     """
@@ -219,9 +211,7 @@ def run_manager_agent(reconciliation_results: Dict) -> str:
     return chain.invoke({})
 
 
-# ============================================================
 # ORCHESTRATION PIPELINE
-# ============================================================
 
 def run_full_reconciliation_pipeline(document_text: str):
     print("🔍 Running Extraction Agent...")
@@ -237,9 +227,7 @@ def run_full_reconciliation_pipeline(document_text: str):
     print(final_output)
 
 
-# ============================================================
 # ENTRYPOINT
-# ============================================================
 
 if __name__ == "__main__":
     loader = PyPDFDirectoryLoader('data2/')

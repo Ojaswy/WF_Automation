@@ -45,9 +45,7 @@ query_engine = index.as_query_engine(
 )
 
 
-# ============================================================
-# AGENT PROMPTS (UNCHANGED)
-# ============================================================
+# AGENT PROMPTS
 
 EXTRACTION_AGENT_PROMPT = """
 You are an expert financial document extraction agent.
